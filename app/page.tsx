@@ -110,7 +110,38 @@ const tools = [
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("hero")
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess(false);
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSuccess(true);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        const data = await response.json();
+        setError(data.message || "Failed to send message");
+      }
+    } catch (err)
+    {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     const handleScroll = () => {
       // Adjusted sections list to remove 'experience'
@@ -553,7 +584,7 @@ export default function Portfolio() {
                 <div className="ml-4 text-sm font-medium">Terminal — contact.form</div>
               </div>
               <div className="p-6">
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label htmlFor="name" className="text-sm font-medium">
@@ -563,6 +594,9 @@ export default function Portfolio() {
                         id="name"
                         className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         placeholder="Your name"
+                        value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        
                       />
                     </div>
                     <div className="space-y-2">
@@ -574,6 +608,9 @@ export default function Portfolio() {
                         type="email"
                         className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         placeholder="Your email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                   
                       />
                     </div>
                   </div>
@@ -585,13 +622,17 @@ export default function Portfolio() {
                       id="message"
                       className="w-full min-h-[120px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       placeholder="Your message"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                 
                     />
                   </div>
-                  <Button type="submit" className="w-full">
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Message
-                  </Button>
-                </form>
+                  <Button type="submit" className="w-full" disabled={loading}>
+        {loading ? "Sending..." : <><Send className="mr-2 h-4 w-4" /> Send Message</>}
+      </Button>
+      {success && <p className="text-green-500 mt-2">Message sent successfully!</p>}
+      {error && <p className="text-red-500 mt-2">{error}</p>}
+                  </form>
               </div>
             </div>
           </div>
