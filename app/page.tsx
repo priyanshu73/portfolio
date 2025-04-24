@@ -333,19 +333,19 @@ export default function Portfolio() {
 
                     <div className="flex gap-2">
                       <Button asChild variant="outline" size="icon">
-                        <Link href="https://github.com" target="_blank">
+                        <Link href="https://github.com/priyanshu73" target="_blank">
                           <Github className="h-4 w-4" />
                           <span className="sr-only">GitHub</span>
                         </Link>
                       </Button>
                       <Button asChild variant="outline" size="icon">
-                        <Link href="https://linkedin.com" target="_blank">
+                        <Link href="https://www.linkedin.com/in/priyanshu-pyakurel/" target="_blank">
                           <Linkedin className="h-4 w-4" />
                           <span className="sr-only">LinkedIn</span>
                         </Link>
                       </Button>
                       <Button asChild variant="outline" size="icon">
-                        <Link href="mailto:john@example.com">
+                        <Link href="mailto:pyakurelpriyanshu73@gmail.com">
                           <Mail className="h-4 w-4" />
                           <span className="sr-only">Email</span>
                         </Link>
