@@ -51,22 +51,23 @@ const projects = [
     github: "https://github.com/priyanshu73/ycp2024",
     demo: "https://github.com/priyanshu73/ycp2024",
   },
-  {
+   {
     id: 6,
+    title: "Immersion Nepal",
+    description: "A sleek website crafted with Next.js and Tailwind CSS, showcasing modern UI/UX design, responsive layouts, and optimized performance for an exceptional user experience.",
+    image: "/placeholderimage5.gif",
+    github: "https://github.com/priyanshu73",
+    demo: "www.immersionnepal.com",
+  },
+  {
+    id: 7,
     title: "This",
     description: "Welcome to my portfolio. The base case was never reached.",
     image: "/placeholderimage6.gif",
     github: "https://github.com/priyanshu73",
     demo: "/",
   },
-    {
-    id: 7,
-    title: "Immersion Nepal",
-    description: "A sleek website crafted with Next.js and Tailwind CSS, showcasing modern UI/UX design, responsive layouts, and optimized performance for an exceptional user experience.",
-    image: "/placeholderimage5.gif",
-    github: "https://github.com/priyanshu73",
-    demo: "www.immersionnepal.com",
-  }
+   
 ];
 
 // --- Devicon Skill Data ---
