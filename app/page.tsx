@@ -20,13 +20,13 @@ const projects = [
     github: "https://github.com/priyanshu73/sphereFrontend", // Replace with actual GitHub link
     demo: "https://github.com/priyanshu73/sphereFrontend", // Replace with actual demo link
   },
-  {
+ {
     id: 2,
-    title: "Immersion Nepal",
-    description: "A sleek website crafted with Next.js and Tailwind CSS, showcasing modern UI/UX design, responsive layouts, and optimized performance for an exceptional user experience.",
-    image: "/placeholderimage5.gif",
+    title: "Silicon Peaks Venture",
+    description: "A cutting-edge website built with Next.js and Tailwind CSS for a venture capital firm, showcasing their portfolio and investment philosophy with a sleek, modern design.",
+    image: "/placeholderimage7.gif",
     github: "https://github.com/priyanshu73",
-    demo: "www.immersionnepal.com",
+    demo: "www.siliconpeaksvc.com",
   },
   {
     id: 3,
@@ -59,6 +59,14 @@ const projects = [
     github: "https://github.com/priyanshu73",
     demo: "/",
   },
+    {
+    id: 7,
+    title: "Immersion Nepal",
+    description: "A sleek website crafted with Next.js and Tailwind CSS, showcasing modern UI/UX design, responsive layouts, and optimized performance for an exceptional user experience.",
+    image: "/placeholderimage5.gif",
+    github: "https://github.com/priyanshu73",
+    demo: "www.immersionnepal.com",
+  }
 ];
 
 // --- Devicon Skill Data ---
