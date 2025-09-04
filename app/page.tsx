@@ -18,7 +18,7 @@ const projects = [
     description: "A no-code platform empowering retail investors to access hedge fund-like tools to create, automate, and deploy trading strategies without coding expertise",
     image: "/placeholderimage1.gif", // Replace with actual image path
     github: "https://github.com/priyanshu73/sphereFrontend", // Replace with actual GitHub link
-    demo: "https://github.com/priyanshu73/sphereFrontend", // Replace with actual demo link
+    demo: "https://v0-sphere-landing-page-seven.vercel.app/?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExZXB0b2NCc2Z5NnpaeHJyWQEe92Zq-4RbsVwLxWxiOV59GE9cMzDJQyKCbkNgk0dk4gEZadcJaVdYSaRh4Eo_aem_b1YLmtilhyjBooCtBh-Xsg", // Replace with actual demo link
   },
  {
     id: 2,
