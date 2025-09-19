@@ -58,7 +58,7 @@ const projects = [
     description: "Dermafyr uses AI for 91% accurate skin analysis, offering personalized skincare and product recommendations. Built with React and TensorFlow, it runs offline on Raspberry Pi kiosks and online",
     image: "/placeholderimage4.gif",
     github: "https://github.com/priyanshu73/ycp2024",
-    demo: "https://github.com/priyanshu73/ycp2024",
+    demo: "https://devpost.com/software/dermafyr",
   },
    {
     id: 7,
@@ -66,7 +66,7 @@ const projects = [
     description: "A sleek website crafted with Next.js and Tailwind CSS, showcasing modern UI/UX design, responsive layouts, and optimized performance for an exceptional user experience.",
     image: "/placeholderimage5.gif",
     github: "https://github.com/priyanshu73",
-    demo: "www.immersionnepal.com",
+    demo: "https://www.immersionnepal.com",
   },
   {
     id: 8,
