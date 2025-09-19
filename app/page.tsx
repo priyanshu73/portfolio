@@ -14,14 +14,23 @@ import { useEffect, useState } from "react"
 const projects = [
   {
     id: 1,
+    title: "Campus Tea",
+    description: "Campus Tea is a live platform built with a Next.js frontend and Express.js backend, using Prisma + PostgreSQL. It integrates Google Workspace APIs for scheduling, Google OAuth for authentication, and Stripe (sandbox) for payments, with Node cron jobs automating meeting verification and payment dispatch." ,
+    image: "/placeholderimage9.gif",
+    github: "https://github.com/priyanshu73",
+    demo: "https://www.campustea.io",
+  },
+  
+  {
+    id: 2,
     title: "Sphere",
     description: "A no-code platform empowering retail investors to access hedge fund-like tools to create, automate, and deploy trading strategies without coding expertise",
     image: "/placeholderimage1.gif", // Replace with actual image path
     github: "https://github.com/priyanshu73/sphereFrontend", // Replace with actual GitHub link
-    demo: "https://github.com/priyanshu73/sphereFrontend", // Replace with actual demo link
+    demo: "https://v0-sphere-landing-page-seven.vercel.app/", // Replace with actual demo link
   },
  {
-    id: 2,
+    id: 3,
     title: "Silicon Peaks Venture",
     description: "A cutting-edge website built with Next.js and Tailwind CSS for a venture capital firm, showcasing their portfolio and investment philosophy with a sleek, modern design.",
     image: "/placeholderimage7.gif",
@@ -29,7 +38,7 @@ const projects = [
     demo: "https://www.siliconpeaksvc.com",
   },
   {
-    id: 3,
+    id: 4,
     title: "Faras",
     description: "A 3 Card Poker game utilizing Object-Oriented Programming (OOP) principles to deliver modular, maintainable code for a dynamic, casino-style card game experience.",
     image: "/placeholderimage2.gif",
@@ -37,14 +46,14 @@ const projects = [
     demo: "https://github.com/priyanshu73/3card-poker",
   },
   {
-    id: 4,
+    id: 5,
     title: "Shape Editor",
     description: "A JavaFX-based Shape Editor that allows users to create and edit various shapes with fill/outline options, supporting delete, move, group, copy, and file save/load features.",
     image: "/placeholderimage3.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://github.com/priyanshu73",
   },{
-    id: 5,
+    id: 6,
     title: "Dermafyr",
     description: "Dermafyr uses AI for 91% accurate skin analysis, offering personalized skincare and product recommendations. Built with React and TensorFlow, it runs offline on Raspberry Pi kiosks and online",
     image: "/placeholderimage4.gif",
@@ -52,7 +61,7 @@ const projects = [
     demo: "https://github.com/priyanshu73/ycp2024",
   },
    {
-    id: 6,
+    id: 7,
     title: "Immersion Nepal",
     description: "A sleek website crafted with Next.js and Tailwind CSS, showcasing modern UI/UX design, responsive layouts, and optimized performance for an exceptional user experience.",
     image: "/placeholderimage5.gif",
@@ -60,13 +69,13 @@ const projects = [
     demo: "www.immersionnepal.com",
   },
   {
-    id: 7,
+    id: 8,
     title: "This",
     description: "Welcome to my portfolio. The base case was never reached.",
     image: "/placeholderimage6.gif",
     github: "https://github.com/priyanshu73",
     demo: "/",
-  },
+  }
    
 ];
 
@@ -388,7 +397,7 @@ export default function Portfolio() {
               <span className="text-primary">$</span> ls -la ./projects
             </div>
             <div className="max-w-3xl mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
-              {projects.map((project) => (
+              {projects.filter(Boolean).map((project) => (
                 <Card key={project.id} className="flex flex-col overflow-hidden border bg-card">
                   <CardHeader className="p-4">
                     <div className="flex items-center">
