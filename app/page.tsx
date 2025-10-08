@@ -48,7 +48,7 @@ const projects = [
   {
     id: 5,
     title: "Shape Editor",
-    description: "A JavaFX-based Shape Editor that allows users to create and edit various shapes with fill/outline options, supporting delete, move, group, copy, and file save/load features.",
+    description: "A Desktop Shape Editor that allows users to create and edit various shapes with fill/outline options, supporting delete, move, group, copy, and file save/load features.",
     image: "/placeholderimage3.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://github.com/priyanshu73",
