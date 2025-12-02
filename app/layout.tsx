@@ -32,7 +32,7 @@ export default function RootLayout({
        
          {/* Other head elements */}
       </head>
-      <body className={jetbrainsMono.className}>
+      <body className={`${jetbrainsMono.className} bg-background`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

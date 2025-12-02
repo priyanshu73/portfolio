@@ -9,6 +9,8 @@ import { Github, ExternalLink, Mail, Linkedin, Send } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Typewriter } from "@/components/typewriter" // Assuming this component exists
+import { AnimatedBackground } from "@/components/animated-background"
+import { Loader } from "@/components/loader"
 import { useEffect, useState } from "react"
 
 const projects = [
@@ -127,6 +129,7 @@ const tools = [
 
 
 export default function Portfolio() {
+  const [isLoading, setIsLoading] = useState(true)
   const [activeSection, setActiveSection] = useState("hero")
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
@@ -187,11 +190,15 @@ export default function Portfolio() {
   }
 
   return (
-    
-    <div className="min-h-screen font-mono bg-background text-foreground flex flex-col">
+    <>
+      {/* Loader Screen */}
+      {isLoading && <Loader onLoadingComplete={() => setIsLoading(false)} />}
       
-     
-      {/* macOS Dock-style navigation at the top */}
+      {/* Animated Background - Now covers entire page */}
+      <AnimatedBackground />
+      
+      <div className="min-h-screen font-mono text-foreground flex flex-col relative">
+        {/* macOS Dock-style navigation at the top */}
       <div className="sticky top-0 z-50 pt-4 pb-2 bg-background/80 backdrop-blur-md">
         <div className="container mx-auto">
           <div className="flex justify-center">
@@ -311,10 +318,10 @@ export default function Portfolio() {
         </div>
       </div>
 
-      <main className="flex-1 container py-6 pt-8">
+      <main className="flex-1 container py-6 pt-8 relative z-10">
         {/* Hero Section */}
-        <section id="hero" className="py-10 md:py-16">
-          <div className="max-w-4xl mx-auto">
+        <section id="hero" className="py-10 md:py-16 relative">
+          <div className="max-w-4xl mx-auto relative z-10">
             <div className="rounded-lg border bg-card shadow-lg overflow-hidden">
               {/* Mac window controls */}
               <div className="flex items-center p-3 border-b bg-muted/30">
@@ -396,7 +403,7 @@ export default function Portfolio() {
             <div className="inline-block text-foreground/60">
               <span className="text-primary">$</span> ls -la ./projects
             </div>
-            <div className="max-w-3xl mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
+            <div className="max-w-3xl lg:max-w-5xl mx-auto grid grid-cols-1 gap-4 sm:gap-6 lg:gap-12 sm:grid-cols-2 lg:grid-cols-2">
               {projects.filter(Boolean).map((project) => (
                 <Card key={project.id} className="flex flex-col overflow-hidden border bg-card">
                   <CardHeader className="p-4">
@@ -670,5 +677,6 @@ export default function Portfolio() {
         </div>
       </footer>
     </div>
+    </>
   )
 }
