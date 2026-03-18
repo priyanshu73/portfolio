@@ -16,13 +16,12 @@ import { useEffect, useState } from "react"
 const projects = [
   {
     id: 1,
-    title: "Campus Tea",
-    description: "Campus Tea is a live platform built with a Next.js frontend and Express.js backend, using Prisma + PostgreSQL. It integrates Google Workspace APIs for scheduling, Google OAuth for authentication, and Stripe (sandbox) for payments, with Node cron jobs automating meeting verification and payment dispatch." ,
-    image: "/placeholderimage9.gif",
+    title: "ContractorOps AI",
+    description: " AI powered platform for automating client communication via SMS, handling calls, capturing leads, and generating invoices instantly. Next.js, Flask, AWS Bedrock, RAG pipelines with pgvector and OpenAI embeddings, and agentic workflows for intelligent automation.",
+    image: "/placeholderimage13.gif",
     github: "https://github.com/priyanshu73",
-    demo: "https://www.campustea.io",
+    demo: "www.contractorops.ai",
   },
-  
   {
     id: 2,
     title: "Sphere",
@@ -31,6 +30,16 @@ const projects = [
     github: "https://github.com/priyanshu73/sphereFrontend", // Replace with actual GitHub link
     demo: "https://v0-sphere-landing-page-seven.vercel.app/", // Replace with actual demo link
   },
+  {
+    id: 9,
+    title: "Campus Tea",
+    description: "Campus Tea is a live platform built with a Next.js frontend and Express.js backend, using Prisma + PostgreSQL. It integrates Google Workspace APIs for scheduling, Google OAuth for authentication, and Stripe (sandbox) for payments, with Node cron jobs automating meeting verification and payment dispatch." ,
+    image: "/placeholderimage9.gif",
+    github: "https://github.com/priyanshu73",
+    demo: "https://www.campustea.io",
+  },
+  
+  
  {
     id: 3,
     title: "Silicon Peaks Venture",
@@ -351,7 +360,7 @@ export default function Portfolio() {
   Hey! I'm a Computer Science student who loves learning new tech and building cool stuff. Right now, I’m focused on an automated trading platform, but I’m always open to new challenges.
 </p>
 <p>
-  I have a deep passion for math, particularly linear algebra, and I admire how it applies to technology and the real world. I’m also passionate about cinema, with filmmaking being one of my hobbies. Some of my favorite films include <em>Se7en</em>, <em>The Truman Show</em>, <em>The Shining</em>, <em>Terminator 2</em>, <em>Fargo</em>, <em>Goodfellas</em>, and many more.
+  I have a deep passion for math, particularly Calculus & Linear Algebra, and I admire how it applies to technology and the real world. I’m also passionate about cinema, with filmmaking being one of my hobbies. Some of my favorite films include <em>Se7en</em>, <em>The Truman Show</em>, <em>The Shining</em>, <em>Terminator 2</em>, <em>Fargo</em>, <em>Goodfellas</em>, and many more.
 </p>
 
                     </div>
