@@ -20,7 +20,7 @@ const projects = [
     description: " AI powered platform for automating client communication via SMS, handling calls, capturing leads, and generating invoices instantly. Next.js, Flask, AWS Bedrock, RAG pipelines with pgvector and OpenAI embeddings, and agentic workflows for intelligent automation.",
     image: "/placeholderimage13.gif",
     github: "https://github.com/priyanshu73",
-    demo: "www.contractorops.ai",
+    demo: "https://www.contractorops.ai",
   },
   {
     id: 2,
