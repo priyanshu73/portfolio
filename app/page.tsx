@@ -328,24 +328,28 @@ export default function Portfolio() {
       </div>
 
       {!isLoading && (
-        <div className="container relative z-40 pt-3 pb-1">
-          <div className="max-w-4xl mx-auto">
-            <a
-              href="tel:+13317074015"
-              className="animate-fade-in flex items-center gap-3 rounded-lg border border-white/10 bg-card/95 backdrop-blur-md px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] transition-all hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] group"
-            >
-              <div className="animate-phone-icon-glow flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-white to-zinc-200 ring-1 ring-white/50 dark:from-white dark:to-white/80">
-                <Phone className="h-4 w-4 text-zinc-700" strokeWidth={2.25} />
+        <div className="container relative z-40 flex justify-center px-4 sm:px-6 pt-3 pb-1">
+          <a
+            href="tel:+13317074015"
+            className="animate-fade-in ios-notification group block w-full max-w-[358px] rounded-[22px] border border-black/[0.06] bg-white/72 px-3.5 py-2.5 font-sans shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.04)] backdrop-blur-2xl backdrop-saturate-150 transition-all active:scale-[0.98] hover:bg-white/88 dark:border-white/10 dark:bg-zinc-900/70 dark:shadow-[0_8px_36px_rgba(0,0,0,0.5)] dark:hover:bg-zinc-900/82"
+          >
+            <div className="flex items-start gap-3">
+              <div className="animate-phone-icon-glow flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[9px] bg-gradient-to-b from-green-400 to-green-600 shadow-sm">
+                <Phone className="h-[18px] w-[18px] text-white" strokeWidth={2.5} />
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium tracking-tight">Talk to my clone</p>
-                <p className="text-xs text-muted-foreground">AI voice · powered by Vapi</p>
+              <div className="min-w-0 flex-1 pt-0.5">
+                <div className="mb-0.5 flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                    Clone
+                  </span>
+                  <span className="text-[11px] text-zinc-400 dark:text-zinc-500">now</span>
+                </div>
+                <p className="text-[15px] font-semibold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50">
+                  Talk to my clone
+                </p>
               </div>
-              <span className="animate-call-glow shrink-0 rounded-full border border-primary/40 bg-primary/15 px-3 py-1.5 text-xs font-semibold text-primary transition-colors group-hover:bg-primary/25 dark:text-emerald-300 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:group-hover:bg-emerald-500/20">
-                Call now
-              </span>
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
       )}
 
