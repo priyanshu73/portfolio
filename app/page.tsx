@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Github, ExternalLink, Mail, Linkedin, Send } from "lucide-react"
+import { Github, ExternalLink, Mail, Linkedin, Send, Phone } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Typewriter } from "@/components/typewriter" // Assuming this component exists
@@ -327,11 +327,33 @@ export default function Portfolio() {
         </div>
       </div>
 
-      <main className="flex-1 container py-6 pt-8 relative z-10">
+      {!isLoading && (
+        <div className="container relative z-40 pt-3 pb-1">
+          <div className="max-w-4xl mx-auto">
+            <a
+              href="tel:+13317074015"
+              className="animate-fade-in flex items-center gap-3 rounded-lg border border-white/10 bg-card/95 backdrop-blur-md px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.25)] transition-all hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] group"
+            >
+              <div className="animate-phone-icon-glow flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-white to-zinc-200 ring-1 ring-white/50 dark:from-white dark:to-white/80">
+                <Phone className="h-4 w-4 text-zinc-700" strokeWidth={2.25} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium tracking-tight">Talk to my clone</p>
+                <p className="text-xs text-muted-foreground">AI voice · powered by Vapi</p>
+              </div>
+              <span className="animate-call-glow shrink-0 rounded-full border border-primary/40 bg-primary/15 px-3 py-1.5 text-xs font-semibold text-primary transition-colors group-hover:bg-primary/25 dark:text-emerald-300 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:group-hover:bg-emerald-500/20">
+                Call now
+              </span>
+            </a>
+          </div>
+        </div>
+      )}
+
+      <main className="flex-1 container py-6 pt-4 relative z-10">
         {/* Hero Section */}
         <section id="hero" className="py-10 md:py-16 relative">
           <div className="max-w-4xl mx-auto relative z-10">
-            <div className="rounded-lg border bg-card shadow-lg overflow-hidden">
+            <div className="relative z-10 rounded-lg border bg-card shadow-lg overflow-hidden">
               {/* Mac window controls */}
               <div className="flex items-center p-3 border-b bg-muted/30">
                 <div className="flex space-x-2">

@@ -106,3 +106,64 @@ section {
 .dock-icon:hover {
   animation: dock-bounce 0.3s ease-in-out;
 }
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes call-glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 12px rgba(255, 255, 255, 0.15),
+      0 0 24px rgba(74, 222, 128, 0.2),
+      inset 0 0 12px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.35),
+      0 0 36px rgba(74, 222, 128, 0.45),
+      inset 0 0 16px rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes phone-icon-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 18px rgba(255, 255, 255, 0.55),
+      0 0 32px rgba(74, 222, 128, 0.25);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out 0.2s both;
+}
+
+.animate-call-glow {
+  animation: call-glow-pulse 2.5s ease-in-out infinite;
+}
+
+.animate-phone-icon-glow {
+  animation: phone-icon-glow 2.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-call-glow,
+  .animate-phone-icon-glow {
+    animation: none;
+  }
+}
