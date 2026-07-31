@@ -5,7 +5,28 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Github, ExternalLink, Mail, Linkedin, Send, Phone } from "lucide-react"
+import {
+  Github,
+  ExternalLink,
+  Mail,
+  Linkedin,
+  Send,
+  Phone,
+  Trash2,
+  X,
+  Minus,
+  RotateCcw,
+  Rocket,
+  Ghost,
+  Zap,
+  Gamepad2,
+  Music,
+  Camera,
+  Bot,
+  Flame,
+  Maximize2,
+  type LucideIcon,
+} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Typewriter } from "@/components/typewriter" // Assuming this component exists
@@ -29,6 +50,22 @@ const projects = [
     image: "/placeholderimage1.gif", // Replace with actual image path
     github: "https://github.com/priyanshu73/sphereFrontend", // Replace with actual GitHub link
     demo: "https://v0-sphere-landing-page-seven.vercel.app/", // Replace with actual demo link
+  },
+  {
+    id: 6,
+    title: "Dermafyr",
+    description: "Dermafyr uses AI for 91% accurate skin analysis, offering personalized skincare and product recommendations. Built with React and TensorFlow, it runs offline on Raspberry Pi kiosks and online",
+    image: "/placeholderimage4.gif",
+    github: "https://github.com/priyanshu73/ycp2024",
+    demo: "https://devpost.com/software/dermafyr",
+  },
+  {
+    id: 10,
+    title: "ChatMigrate",
+    description: "A Chrome extension that moves conversations between ChatGPT, Claude, and Gemini in one click, carrying full context across models — no copy-paste. Published on the Chrome Web Store with 400+ installs and 230+ active users.",
+    image: "/chatmigrate.gif",
+    github: "https://github.com/priyanshu73",
+    demo: "https://chromewebstore.google.com/detail/imhoeankhejliodacojeffhkhnajhbhl",
   },
   {
     id: 9,
@@ -63,13 +100,6 @@ const projects = [
     image: "/placeholderimage3.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://github.com/priyanshu73",
-  },{
-    id: 6,
-    title: "Dermafyr",
-    description: "Dermafyr uses AI for 91% accurate skin analysis, offering personalized skincare and product recommendations. Built with React and TensorFlow, it runs offline on Raspberry Pi kiosks and online",
-    image: "/placeholderimage4.gif",
-    github: "https://github.com/priyanshu73/ycp2024",
-    demo: "https://devpost.com/software/dermafyr",
   },
    {
     id: 7,
@@ -136,6 +166,78 @@ const tools = [
 ];
 // --- End Devicon Skill Data ---
 
+// Gradient app-icon styles for minimized windows in the dock (picked per project id)
+const dockStyles = [
+  { Icon: Rocket, bg: "from-orange-400 to-pink-600" },
+  { Icon: Ghost, bg: "from-indigo-400 to-purple-600" },
+  { Icon: Zap, bg: "from-amber-300 to-orange-500" },
+  { Icon: Gamepad2, bg: "from-green-400 to-emerald-600" },
+  { Icon: Music, bg: "from-rose-400 to-red-600" },
+  { Icon: Camera, bg: "from-sky-400 to-blue-600" },
+  { Icon: Bot, bg: "from-violet-400 to-fuchsia-600" },
+  { Icon: Flame, bg: "from-yellow-400 to-red-500" },
+]
+
+type WinId = number | string
+
+// Section windows (non-project cards) that share the trash/dock behavior
+const sectionWindows: Record<string, { label: string }> = {
+  hero: { label: "Terminal — whoami" },
+  skills: { label: "Terminal — skills.json" },
+  contact: { label: "Terminal — contact.form" },
+}
+
+const windowLabel = (id: WinId) => {
+  if (typeof id === "number") {
+    const p = projects.find((pr) => pr && pr.id === id)
+    return p ? `project-${p.title}.sh` : String(id)
+  }
+  return sectionWindows[id]?.label ?? id
+}
+
+const dockStyleFor = (id: WinId) => {
+  const n =
+    typeof id === "number" ? id : id.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0)
+  return dockStyles[n % dockStyles.length]
+}
+
+function TrafficLights({
+  onClose,
+  onMinimize,
+  onGreen,
+  GreenIcon = Maximize2,
+}: {
+  onClose: () => void
+  onMinimize: () => void
+  onGreen: () => void
+  GreenIcon?: LucideIcon
+}) {
+  return (
+    <div className="group/lights flex space-x-2">
+      <button
+        aria-label="Close — send to trash"
+        onClick={onClose}
+        className="flex h-3 w-3 items-center justify-center rounded-full bg-red-500 transition-transform hover:scale-125"
+      >
+        <X className="h-2 w-2 text-red-950 opacity-0 transition-opacity group-hover/lights:opacity-100" strokeWidth={3} />
+      </button>
+      <button
+        aria-label="Minimize to dock"
+        onClick={onMinimize}
+        className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-500 transition-transform hover:scale-125"
+      >
+        <Minus className="h-2 w-2 text-yellow-950 opacity-0 transition-opacity group-hover/lights:opacity-100" strokeWidth={3} />
+      </button>
+      <button
+        aria-label="Zoom"
+        onClick={onGreen}
+        className="flex h-3 w-3 items-center justify-center rounded-full bg-green-500 transition-transform hover:scale-125"
+      >
+        <GreenIcon className="h-2 w-2 text-green-950 opacity-0 transition-opacity group-hover/lights:opacity-100" strokeWidth={3} />
+      </button>
+    </div>
+  )
+}
 
 export default function Portfolio() {
   const [isLoading, setIsLoading] = useState(true)
@@ -144,6 +246,71 @@ export default function Portfolio() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+
+  // --- Interactive windows: trash + dock (projects + section cards) ---
+  const [trashed, setTrashed] = useState<WinId[]>([])
+  const [minimized, setMinimized] = useState<WinId[]>([])
+  const [windowAnim, setWindowAnim] = useState<Record<string, "close" | "minimize">>({})
+  const [trashOpen, setTrashOpen] = useState(false)
+  const [zoomKeys, setZoomKeys] = useState<Record<string, number>>({})
+  const [showHint, setShowHint] = useState(true)
+
+  const closeProject = (id: WinId) => {
+    setShowHint(false)
+    setWindowAnim((a) => ({ ...a, [id]: "close" as const }))
+    setTimeout(() => {
+      setTrashed((t) => [...t, id])
+      setWindowAnim(({ [id]: _removed, ...rest }) => rest)
+    }, 550)
+  }
+
+  const minimizeProject = (id: WinId) => {
+    setShowHint(false)
+    setWindowAnim((a) => ({ ...a, [id]: "minimize" as const }))
+    setTimeout(() => {
+      setMinimized((m) => [...m, id])
+      setWindowAnim(({ [id]: _removed, ...rest }) => rest)
+    }, 550)
+  }
+
+  const restoreFromTrash = (id: WinId) => {
+    setTrashed((t) => {
+      const next = t.filter((x) => x !== id)
+      if (next.length === 0) setTrashOpen(false)
+      return next
+    })
+  }
+
+  const restoreFromDock = (id: WinId) => {
+    setMinimized((m) => m.filter((x) => x !== id))
+  }
+
+  // Green button on section cards: replay the zoom-in by remounting with a bumped key
+  const zoomWindow = (id: string) => {
+    setShowHint(false)
+    setZoomKeys((z) => ({ ...z, [id]: (z[id] ?? 0) + 1 }))
+  }
+
+  const openDemo = (url: string) => {
+    setShowHint(false)
+    window.open(url, "_blank")
+  }
+
+  const isGone = (id: WinId) => trashed.includes(id) || minimized.includes(id)
+  const winAnimCls = (id: WinId) =>
+    windowAnim[id] === "close"
+      ? "animate-card-to-trash"
+      : windowAnim[id] === "minimize"
+        ? "animate-card-to-dock"
+        : ""
+
+  // Auto-dismiss the tap hint a few seconds after the page reveals
+  useEffect(() => {
+    if (!isLoading) {
+      const t = setTimeout(() => setShowHint(false), 9000)
+      return () => clearTimeout(t)
+    }
+  }, [isLoading])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -353,19 +520,102 @@ export default function Portfolio() {
         </div>
       )}
 
+      {/* Trash — closed project windows land here */}
+      {trashed.length > 0 && (
+        <div className="fixed right-4 top-24 z-50 font-mono">
+          <button
+            onClick={() => setTrashOpen((o) => !o)}
+            aria-label={`Trash — ${trashed.length} items`}
+            className="animate-trash-in relative flex h-12 w-12 items-center justify-center rounded-2xl border border-foreground/10 bg-background/70 shadow-xl backdrop-blur-xl transition-transform hover:scale-105 active:scale-95"
+          >
+            <Trash2 className="h-6 w-6 text-foreground/80" />
+            <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[11px] font-bold text-white shadow">
+              {trashed.length}
+            </span>
+          </button>
+
+          {trashOpen && (
+            <div className="animate-card-pop-in absolute right-0 mt-2 w-64 overflow-hidden rounded-lg border bg-card shadow-2xl">
+              <div className="flex items-center border-b bg-muted/30 p-2">
+                <div className="flex space-x-1.5">
+                  <div className="h-2.5 w-2.5 rounded-full bg-red-500"></div>
+                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-500"></div>
+                  <div className="h-2.5 w-2.5 rounded-full bg-green-500"></div>
+                </div>
+                <span className="ml-3 text-xs font-medium">Trash</span>
+              </div>
+              <ul className="max-h-56 overflow-y-auto p-1">
+                {trashed.map((id) => (
+                  <li key={id}>
+                    <button
+                      onClick={() => restoreFromTrash(id)}
+                      className="flex w-full items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left text-xs hover:bg-muted"
+                    >
+                      <span className="truncate">{windowLabel(id)}</span>
+                      <span className="flex shrink-0 items-center gap-1 text-primary">
+                        <RotateCcw className="h-3 w-3" /> Put back
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Dock — minimized project windows live here */}
+      {minimized.length > 0 && (
+        <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2">
+          <div className="animate-dock-rise flex items-end gap-3 rounded-2xl border border-foreground/10 bg-background/60 px-4 pb-2 pt-3 shadow-2xl backdrop-blur-xl">
+            {minimized.map((id) => {
+              const { Icon, bg } = dockStyleFor(id)
+              return (
+                <button
+                  key={id}
+                  onClick={() => restoreFromDock(id)}
+                  aria-label={`Restore ${windowLabel(id)}`}
+                  className="group/dock relative flex flex-col items-center"
+                >
+                  <span className="pointer-events-none absolute -top-9 whitespace-nowrap rounded-md border bg-card px-2 py-1 font-mono text-[10px] opacity-0 shadow transition-opacity group-hover/dock:opacity-100">
+                    {windowLabel(id)}
+                  </span>
+                  <span
+                    className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-b ${bg} shadow-md transition-transform duration-200 group-hover/dock:-translate-y-1.5 group-hover/dock:scale-110`}
+                  >
+                    <Icon className="h-6 w-6 text-white" />
+                  </span>
+                  <span className="mt-1 h-1 w-1 rounded-full bg-foreground/60"></span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
       <main className="flex-1 container py-6 pt-4 relative z-10">
         {/* Hero Section */}
         <section id="hero" className="py-10 md:py-16 relative">
           <div className="max-w-4xl mx-auto relative z-10">
-            <div className="relative z-10 rounded-lg border bg-card shadow-lg overflow-hidden">
+            {!isGone("hero") && (
+            <div
+              key={`hero-${zoomKeys["hero"] ?? 0}`}
+              className={`relative z-10 rounded-lg border bg-card shadow-lg overflow-hidden ${
+                isLoading ? "opacity-0" : winAnimCls("hero") || "animate-terminal-warp"
+              }`}
+            >
               {/* Mac window controls */}
-              <div className="flex items-center p-3 border-b bg-muted/30">
-                <div className="flex space-x-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                  <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                </div>
+              <div className="relative flex items-center p-3 border-b bg-muted/30">
+                <TrafficLights
+                  onClose={() => closeProject("hero")}
+                  onMinimize={() => minimizeProject("hero")}
+                  onGreen={() => zoomWindow("hero")}
+                />
                 <div className="ml-4 text-sm font-medium">Terminal — whoami</div>
+                {/* Subtle tap-gesture hint over the traffic lights */}
+                {showHint && !isLoading && (
+                  <span className="tap-hint pointer-events-none absolute left-7 top-6 z-20" aria-hidden="true"></span>
+                )}
               </div>
 
               <div className="p-6">
@@ -429,6 +679,7 @@ export default function Portfolio() {
                 </div>
               </div>
             </div>
+            )}
           </div>
         </section>
 
@@ -439,15 +690,28 @@ export default function Portfolio() {
               <span className="text-primary">$</span> ls -la ./projects
             </div>
             <div className="max-w-3xl lg:max-w-5xl mx-auto grid grid-cols-1 gap-4 sm:gap-6 lg:gap-12 sm:grid-cols-2 lg:grid-cols-2">
-              {projects.filter(Boolean).map((project) => (
-                <Card key={project.id} className="flex flex-col overflow-hidden border bg-card">
+              {projects
+                .filter(Boolean)
+                .filter((p) => !trashed.includes(p.id) && !minimized.includes(p.id))
+                .map((project) => (
+                <Card
+                  key={project.id}
+                  className={`flex flex-col overflow-hidden border bg-card ${
+                    windowAnim[project.id] === "close"
+                      ? "animate-card-to-trash"
+                      : windowAnim[project.id] === "minimize"
+                        ? "animate-card-to-dock"
+                        : "animate-card-pop-in"
+                  }`}
+                >
                   <CardHeader className="p-4">
                     <div className="flex items-center">
-                      <div className="flex space-x-2">
-                        <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                        <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                        <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                      </div>
+                      <TrafficLights
+                        onClose={() => closeProject(project.id)}
+                        onMinimize={() => minimizeProject(project.id)}
+                        onGreen={() => openDemo(project.demo)}
+                        GreenIcon={ExternalLink}
+                      />
                       <CardTitle className="ml-4 text-sm">project-{project.title}.sh</CardTitle>
                     </div>
                   </CardHeader>
@@ -493,14 +757,20 @@ export default function Portfolio() {
             <div className="inline-block text-foreground/60">
               <span className="text-primary">$</span> grep -r "skills" ./
             </div>
-            <div className="rounded-lg border bg-card shadow-lg overflow-hidden">
+            {!isGone("skills") && (
+            <div
+              key={`skills-${zoomKeys["skills"] ?? 0}`}
+              className={`rounded-lg border bg-card shadow-lg overflow-hidden ${
+                winAnimCls("skills") || (zoomKeys["skills"] ? "animate-terminal-warp" : "")
+              }`}
+            >
               {/* Mac window controls */}
               <div className="flex items-center p-3 border-b bg-muted/30">
-                <div className="flex space-x-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                  <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                </div>
+                <TrafficLights
+                  onClose={() => closeProject("skills")}
+                  onMinimize={() => minimizeProject("skills")}
+                  onGreen={() => zoomWindow("skills")}
+                />
                 <div className="ml-4 text-sm font-medium">Terminal — skills.json</div>
               </div>
               <div className="p-6">
@@ -562,6 +832,7 @@ export default function Portfolio() {
                 </Tabs>
               </div>
             </div>
+            )}
           </div>
         </section>
 
@@ -633,14 +904,20 @@ export default function Portfolio() {
             <div className="inline-block text-foreground/60">
               <span className="text-primary">$echo "Let's connect"  ./contact.txt</span> 
             </div>
-            <div className="rounded-lg border bg-card shadow-lg overflow-hidden">
+            {!isGone("contact") && (
+            <div
+              key={`contact-${zoomKeys["contact"] ?? 0}`}
+              className={`rounded-lg border bg-card shadow-lg overflow-hidden ${
+                winAnimCls("contact") || (zoomKeys["contact"] ? "animate-terminal-warp" : "")
+              }`}
+            >
               {/* Mac window controls */}
               <div className="flex items-center p-3 border-b bg-muted/30">
-                <div className="flex space-x-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                  <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                </div>
+                <TrafficLights
+                  onClose={() => closeProject("contact")}
+                  onMinimize={() => minimizeProject("contact")}
+                  onGreen={() => zoomWindow("contact")}
+                />
                 <div className="ml-4 text-sm font-medium">Terminal — contact.form</div>
               </div>
               <div className="p-6">
@@ -695,6 +972,7 @@ export default function Portfolio() {
                   </form>
               </div>
             </div>
+            )}
           </div>
         </section>
       </main>

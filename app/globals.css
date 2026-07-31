@@ -148,6 +148,156 @@ section {
   }
 }
 
+@keyframes terminal-warp-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.05);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-terminal-warp {
+  animation: terminal-warp-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* --- Interactive project windows: trash + dock --- */
+@keyframes card-to-trash {
+  to {
+    opacity: 0;
+    transform: translate(45vw, -50vh) scale(0.05) rotate(10deg);
+    filter: blur(2px);
+  }
+}
+
+@keyframes card-to-dock {
+  40% {
+    opacity: 1;
+    transform: translateY(8vh) scale(0.7) scaleY(0.9);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(55vh) scale(0.08) scaleY(0.04);
+  }
+}
+
+@keyframes card-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes trash-in {
+  from {
+    opacity: 0;
+    transform: translateX(90px) scale(0.5);
+  }
+}
+
+@keyframes dock-rise {
+  from {
+    opacity: 0;
+    transform: translateY(90px);
+  }
+}
+
+.animate-card-to-trash {
+  animation: card-to-trash 0.55s cubic-bezier(0.5, 0, 0.75, 0.2) forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.animate-card-to-dock {
+  animation: card-to-dock 0.55s cubic-bezier(0.5, 0, 0.75, 0.2) forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.animate-card-pop-in {
+  animation: card-pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.animate-trash-in {
+  animation: trash-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.animate-dock-rise {
+  animation: dock-rise 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* --- Tap-gesture hint: white fingertip dot that presses + ripples, no text --- */
+@keyframes tap-hint-appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes tap-press {
+  0%,
+  55%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  20% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  38% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes tap-ripple {
+  0%,
+  18% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  28% {
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.tap-hint {
+  display: block;
+  width: 20px;
+  height: 20px;
+  animation: tap-hint-appear 0.6s ease-out 1.4s both;
+}
+
+.tap-hint::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  animation: tap-ripple 1.8s ease-out 1.6s infinite;
+}
+
+.tap-hint::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.75));
+  box-shadow: 0 1px 6px rgba(255, 255, 255, 0.45), 0 2px 10px rgba(0, 0, 0, 0.25);
+  animation: tap-press 1.8s ease-in-out 1.6s infinite;
+}
+
 .animate-fade-in {
   animation: fade-in 0.8s ease-out 0.2s both;
 }
@@ -163,7 +313,26 @@ section {
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in,
   .animate-call-glow,
-  .animate-phone-icon-glow {
+  .animate-phone-icon-glow,
+  .animate-terminal-warp,
+  .animate-card-pop-in,
+  .animate-trash-in,
+  .animate-dock-rise {
     animation: none;
+  }
+
+  .tap-hint,
+  .tap-hint::before,
+  .tap-hint::after {
+    animation: none;
+  }
+
+  .tap-hint::before {
+    display: none;
+  }
+
+  .animate-card-to-trash,
+  .animate-card-to-dock {
+    animation-duration: 0.01s;
   }
 }
