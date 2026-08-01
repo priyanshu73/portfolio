@@ -38,7 +38,7 @@ const projects = [
   {
     id: 1,
     title: "ContractorOps AI",
-    description: " AI powered platform for automating client communication via SMS, handling calls, capturing leads, and generating invoices instantly. Next.js, Flask, AWS Bedrock, RAG pipelines with pgvector and OpenAI embeddings, and agentic workflows for intelligent automation.",
+    description: "Production-ready platform with custom-engineered AI voice and SMS agents (Twilio, Amazon Nova Sonic via AWS Bedrock) that handle calls, capture leads, and generate invoices instantly — built with a custom knowledge base, training pipelines, and testing framework. Next.js, Flask, RAG with pgvector and OpenAI embeddings, and agentic workflows.",
     image: "/placeholderimage13.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://www.contractorops.ai",
