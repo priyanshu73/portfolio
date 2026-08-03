@@ -233,6 +233,40 @@ section {
   animation: dock-rise 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+/* --- 3D flip: project cards reveal impact facts on the back --- */
+.flip-scene {
+  perspective: 1400px;
+}
+
+.flip-inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-front,
+.flip-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner {
+    transition: none;
+  }
+}
+
 /* --- Tap-gesture hint: white fingertip dot that presses + ripples, no text --- */
 @keyframes tap-hint-appear {
   from {

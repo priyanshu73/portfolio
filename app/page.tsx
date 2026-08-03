@@ -25,6 +25,7 @@ import {
   Bot,
   Flame,
   Maximize2,
+  FlipHorizontal2,
   type LucideIcon,
 } from "lucide-react"
 import Image from "next/image"
@@ -34,7 +35,23 @@ import { AnimatedBackground } from "@/components/animated-background"
 import { Loader } from "@/components/loader"
 import { useEffect, useState } from "react"
 
-const projects = [
+type ProjectFacts = {
+  headline?: string
+  stats?: { value: string; label: string }[]
+  points?: string[]
+}
+
+type Project = {
+  id: number
+  title: string
+  description: string
+  image: string
+  github: string
+  demo: string
+  facts?: ProjectFacts
+}
+
+const projects: Project[] = [
   {
     id: 1,
     title: "ContractorOps AI",
@@ -42,6 +59,13 @@ const projects = [
     image: "/placeholderimage13.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://www.contractorops.ai",
+    facts: {
+      headline: "Real contractors. Real revenue.",
+      stats: [
+        { value: "15", label: "Paid users" },
+        { value: "$3K", label: "MRR" },
+      ],
+    },
   },
   {
     id: 2,
@@ -58,6 +82,10 @@ const projects = [
     image: "/placeholderimage4.gif",
     github: "https://github.com/priyanshu73/ycp2024",
     demo: "https://devpost.com/software/dermafyr",
+    facts: {
+      headline: "Best of Show — York Hackathon 2024",
+      stats: [{ value: "1st", label: "Place · Best of Show" }],
+    },
   },
   {
     id: 10,
@@ -66,6 +94,13 @@ const projects = [
     image: "/chatmigrate.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://chromewebstore.google.com/detail/imhoeankhejliodacojeffhkhnajhbhl",
+    facts: {
+      headline: "Live on the Chrome Web Store",
+      stats: [
+        { value: "300", label: "Daily active users" },
+        { value: "400+", label: "Installs" },
+      ],
+    },
   },
   {
     id: 9,
@@ -74,6 +109,10 @@ const projects = [
     image: "/placeholderimage9.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://www.campustea.io",
+    facts: {
+      headline: "Entrepreneurship Award winner",
+      stats: [{ value: "$10K", label: "Award funding" }],
+    },
   },
   
   
@@ -84,6 +123,15 @@ const projects = [
     image: "/placeholderimage7.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://www.siliconpeaksvc.com",
+    facts: {
+      headline: "Technical sounding board for early-stage founders",
+      stats: [{ value: "50+", label: "Startup conversations" }],
+      points: [
+        "Architecture & system design sessions",
+        "Scaling strategies for early products",
+        "Feature brainstorms with founding teams",
+      ],
+    },
   },
   {
     id: 4,
@@ -254,6 +302,11 @@ export default function Portfolio() {
   const [trashOpen, setTrashOpen] = useState(false)
   const [zoomKeys, setZoomKeys] = useState<Record<string, number>>({})
   const [showHint, setShowHint] = useState(true)
+  const [flippedIds, setFlippedIds] = useState<number[]>([])
+
+  const toggleFlip = (id: number) => {
+    setFlippedIds((f) => (f.includes(id) ? f.filter((x) => x !== id) : [...f, id]))
+  }
 
   const closeProject = (id: WinId) => {
     setShowHint(false)
@@ -694,9 +747,10 @@ export default function Portfolio() {
                 .filter(Boolean)
                 .filter((p) => !trashed.includes(p.id) && !minimized.includes(p.id))
                 .map((project) => (
+                <div key={project.id} className="flip-scene">
+                <div className={`flip-inner ${flippedIds.includes(project.id) && project.facts ? "is-flipped" : ""}`}>
                 <Card
-                  key={project.id}
-                  className={`flex flex-col overflow-hidden border bg-card ${
+                  className={`flip-front flex h-full flex-col overflow-hidden border bg-card ${
                     windowAnim[project.id] === "close"
                       ? "animate-card-to-trash"
                       : windowAnim[project.id] === "minimize"
@@ -713,6 +767,16 @@ export default function Portfolio() {
                         GreenIcon={ExternalLink}
                       />
                       <CardTitle className="ml-4 text-sm">project-{project.title}.sh</CardTitle>
+                      {project.facts && (
+                        <button
+                          onClick={() => toggleFlip(project.id)}
+                          aria-label={`Flip to see ${project.title} impact`}
+                          title="Behind the numbers"
+                          className="ml-auto rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
+                        >
+                          <FlipHorizontal2 className="h-4 w-4" />
+                        </button>
+                      )}
                     </div>
                   </CardHeader>
                   <div className="relative aspect-video overflow-hidden bg-muted">
@@ -746,6 +810,62 @@ export default function Portfolio() {
                     </Button>
                   </CardFooter>
                 </Card>
+
+                {project.facts && (
+                  <div className="flip-back flex flex-col overflow-hidden rounded-lg border bg-card shadow-lg">
+                    <div className="flex items-center border-b bg-muted/30 p-4">
+                      <div className="flex space-x-2">
+                        <div className="h-3 w-3 rounded-full bg-foreground/15"></div>
+                        <div className="h-3 w-3 rounded-full bg-foreground/15"></div>
+                        <div className="h-3 w-3 rounded-full bg-foreground/15"></div>
+                      </div>
+                      <CardTitle className="ml-4 text-sm">impact.md — {project.title}</CardTitle>
+                      <button
+                        onClick={() => toggleFlip(project.id)}
+                        aria-label="Flip back to project"
+                        title="Back to project"
+                        className="ml-auto rounded-md p-1.5 text-primary transition-colors hover:bg-muted"
+                      >
+                        <FlipHorizontal2 className="h-4 w-4 rotate-180" />
+                      </button>
+                    </div>
+                    <div className="relative flex flex-1 flex-col justify-center gap-5 overflow-y-auto p-6">
+                      <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-3xl"></div>
+                      <div className="text-sm text-foreground/60">
+                        <span className="text-primary">$</span> cat impact.md
+                      </div>
+                      {project.facts.stats && (
+                        <div className="flex flex-wrap gap-x-10 gap-y-4">
+                          {project.facts.stats.map((s) => (
+                            <div key={s.label}>
+                              <div className="text-4xl font-bold tracking-tight text-primary sm:text-5xl">
+                                {s.value}
+                              </div>
+                              <div className="mt-1 text-[11px] uppercase tracking-widest text-muted-foreground">
+                                {s.label}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      {project.facts.headline && (
+                        <p className="text-base font-semibold text-foreground/90">{project.facts.headline}</p>
+                      )}
+                      {project.facts.points && (
+                        <ul className="space-y-1.5">
+                          {project.facts.points.map((pt) => (
+                            <li key={pt} className="flex gap-2 text-sm text-foreground/75">
+                              <span className="text-primary">▸</span>
+                              {pt}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                )}
+                </div>
+                </div>
               ))}
             </div>
           </div>
