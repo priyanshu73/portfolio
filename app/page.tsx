@@ -26,6 +26,17 @@ import {
   Flame,
   Maximize2,
   FlipHorizontal2,
+  Layers,
+  AudioWaveform,
+  Sparkles,
+  Workflow,
+  Link2,
+  FileSearch,
+  Network,
+  Scale,
+  Database,
+  Cable,
+  ListOrdered,
   type LucideIcon,
 } from "lucide-react"
 import Image from "next/image"
@@ -46,6 +57,7 @@ type Project = {
   title: string
   description: string
   image: string
+  video?: string
   github: string
   demo: string
   facts?: ProjectFacts
@@ -55,7 +67,7 @@ const projects: Project[] = [
   {
     id: 1,
     title: "ContractorOps AI",
-    description: "Production-ready platform with custom-engineered AI voice and SMS agents (Twilio, Amazon Nova Sonic via AWS Bedrock) that handle calls, capture leads, and generate invoices instantly — built with a custom knowledge base, training pipelines, and testing framework. Next.js, Flask, RAG with pgvector and OpenAI embeddings, and agentic workflows.",
+    description: "Production-ready platform with custom-engineered AI voice and SMS agents (Twilio, Amazon Nova Sonic via AWS Bedrock) that handle calls, capture leads, and generate invoices instantly — built with a custom knowledge base, training pipelines, and testing framework. Re-architected a 49-tool single-loop agent into a 6-domain LangGraph system with classifier-routed parallel fan-out, cutting 7s off single-domain turns. FastAPI, Next.js, RAG with pgvector and OpenAI embeddings.",
     image: "/placeholderimage13.gif",
     github: "https://github.com/priyanshu73",
     demo: "https://www.contractorops.ai",
@@ -66,6 +78,41 @@ const projects: Project[] = [
         { value: "$3K", label: "MRR" },
       ],
     },
+  },
+  {
+    id: 11,
+    title: "Computer From Scratch",
+    description:
+      "A full 16-bit Hack computer (nand2tetris) built from logic gates up in Logisim — ALU, registers, program counter, CPU, ROM, RAM, and a memory-mapped 512×256 display wired together by hand. It executes real Hack machine code: Pong runs on it, and a custom program streams a sprinting cat animation across the screen, straight from ROM.",
+    image: "/computer-from-scratch.mp4",
+    video: "/computer-from-scratch.mp4",
+    github: "https://github.com/priyanshu73",
+    demo: "https://github.com/priyanshu73",
+  },
+  {
+    id: 10,
+    title: "ChatMigrate",
+    description: "A Chrome extension that moves conversations between ChatGPT, Claude, and Gemini in one click, carrying full context across models — no copy-paste. Published on the Chrome Web Store with 400+ installs and 230+ active users.",
+    image: "/chatmigrate.gif",
+    github: "https://github.com/priyanshu73",
+    demo: "https://chromewebstore.google.com/detail/imhoeankhejliodacojeffhkhnajhbhl",
+    facts: {
+      headline: "Live on the Chrome Web Store",
+      stats: [
+        { value: "300", label: "Daily active users" },
+        { value: "400+", label: "Installs" },
+      ],
+    },
+  },
+  {
+    id: 12,
+    title: "PiCar-X Line Follower",
+    description:
+      "An autonomous line-following robot built on the SunFounder PiCar-X (Raspberry Pi) for CS 371 — Intro to AI. Python control code reads the 3-channel grayscale sensor to steer the car through a taped course, improving on the stock line-following API to handle sudden turns up to 90° despite the car's Ackermann steering and non-zero turning radius, with calibrated sensor thresholds and lost-line recovery.",
+    image: "/picarx-line-follower.mp4",
+    video: "/picarx-line-follower.mp4",
+    github: "https://github.com/priyanshu73",
+    demo: "https://github.com/priyanshu73",
   },
   {
     id: 2,
@@ -85,21 +132,6 @@ const projects: Project[] = [
     facts: {
       headline: "Best of Show — York Hackathon 2024",
       stats: [{ value: "1st", label: "Place · Best of Show" }],
-    },
-  },
-  {
-    id: 10,
-    title: "ChatMigrate",
-    description: "A Chrome extension that moves conversations between ChatGPT, Claude, and Gemini in one click, carrying full context across models — no copy-paste. Published on the Chrome Web Store with 400+ installs and 230+ active users.",
-    image: "/chatmigrate.gif",
-    github: "https://github.com/priyanshu73",
-    demo: "https://chromewebstore.google.com/detail/imhoeankhejliodacojeffhkhnajhbhl",
-    facts: {
-      headline: "Live on the Chrome Web Store",
-      stats: [
-        { value: "300", label: "Daily active users" },
-        { value: "400+", label: "Installs" },
-      ],
     },
   },
   {
@@ -168,51 +200,63 @@ const projects: Project[] = [
    
 ];
 
-// --- Devicon Skill Data ---
-const languages = [
-  { name: "JavaScript", iconClass: "devicon-javascript-plain colored" },
-  { name: "TypeScript", iconClass: "devicon-typescript-plain colored" },
+// --- Skill Data (mirrors resume: Languages / Frameworks & Libraries / LLM & AI Tooling / Tools & Technologies) ---
+type Skill = { name: string; iconClass?: string; Icon?: LucideIcon }
+
+const languages: Skill[] = [
   { name: "Python", iconClass: "devicon-python-plain colored" },
   { name: "Java", iconClass: "devicon-java-plain colored" },
+  { name: "JavaScript", iconClass: "devicon-javascript-plain colored" },
+  { name: "TypeScript", iconClass: "devicon-typescript-plain colored" },
   { name: "C++", iconClass: "devicon-cplusplus-plain colored" },
-  { name: "SQL", iconClass: "devicon-azuresqldatabase-plain colored" }, // Generic SQL or specific DB like PostgreSQL
-  { name: "HTML5", iconClass: "devicon-html5-plain colored" },
-  { name: "CSS3", iconClass: "devicon-css3-plain colored" },
+  { name: "R", iconClass: "devicon-r-plain colored" },
+  { name: "SQL", iconClass: "devicon-microsoftsqlserver-plain colored" },
 ];
 
-const frontend = [
-  { name: "React", iconClass: "devicon-react-original colored" },
-  { name: "Next.js", iconClass: "devicon-nextjs-original colored" }, // Use 'colored' for dark mode too
-  { name: "TailwindCSS", iconClass: "devicon-tailwindcss-plain colored" },
-  { name: "Redux", iconClass: "devicon-redux-original colored" },
-  { name: "Vue.js", iconClass: "devicon-vuejs-plain colored" },
-  { name: "Angular", iconClass: "devicon-angularjs-plain colored" },
-  { name: "SASS", iconClass: "devicon-sass-original colored" },
-  { name: "Webpack", iconClass: "devicon-webpack-plain colored" },
-];
-
-const backend = [
-  { name: "Node.js", iconClass: "devicon-nodejs-plain colored" },
-  { name: "Express", iconClass: "devicon-express-original colored" }, // Use 'colored' for dark mode too
+const frameworks: Skill[] = [
+  { name: "FastAPI", iconClass: "devicon-fastapi-plain colored" },
   { name: "Django", iconClass: "devicon-django-plain colored" },
-  { name: "Flask", iconClass: "devicon-flask-original colored" }, // Use 'colored' for dark mode too
-  { name: "Spring", iconClass: "devicon-spring-plain colored" },
-  { name: "MongoDB", iconClass: "devicon-mongodb-plain colored" },
-  { name: "PostgreSQL", iconClass: "devicon-postgresql-plain colored" },
-  { name: "Firebase", iconClass: "devicon-firebase-plain colored" },
+  { name: "React", iconClass: "devicon-react-original colored" },
+  { name: "Next.js", iconClass: "devicon-nextjs-original colored" },
+  { name: "PyTorch", iconClass: "devicon-pytorch-original colored" },
+  { name: "TensorFlow", iconClass: "devicon-tensorflow-original colored" },
+  { name: "SQLAlchemy", iconClass: "devicon-sqlalchemy-plain colored" },
+  { name: "Pandas", iconClass: "devicon-pandas-original colored" },
+  { name: "NumPy", iconClass: "devicon-numpy-original colored" },
 ];
 
-const tools = [
-  { name: "Git", iconClass: "devicon-git-plain colored" },
-  { name: "Docker", iconClass: "devicon-docker-plain colored" },
-  { name: "AWS", iconClass: "devicon-amazonwebservices-original colored" },
-  { name: "Vercel", iconClass: "devicon-vercel-original colored" }, // Use 'colored' for dark mode too
-  { name: "VS Code", iconClass: "devicon-vscode-plain colored" },
-  { name: "Figma", iconClass: "devicon-figma-plain colored" },
-  { name: "Jira", iconClass: "devicon-jira-plain colored" },
-  { name: "GitHub Actions", iconClass: "devicon-githubactions-plain colored" }, // Check if this exists or use GitHub icon
+const llmAi: Skill[] = [
+  { name: "AWS Bedrock", Icon: Layers },
+  { name: "Amazon Nova Sonic", Icon: AudioWaveform },
+  { name: "Amazon Q", Icon: Bot },
+  { name: "OpenAI APIs", Icon: Sparkles },
+  { name: "LangGraph", Icon: Workflow },
+  { name: "LangChain", Icon: Link2 },
+  { name: "RAG (BM25 + dense)", Icon: FileSearch },
+  { name: "pgvector / HNSW", Icon: Network },
+  { name: "LLM-as-judge evals", Icon: Scale },
 ];
-// --- End Devicon Skill Data ---
+
+const tools: Skill[] = [
+  { name: "Docker", iconClass: "devicon-docker-plain colored" },
+  { name: "Git", iconClass: "devicon-git-plain colored" },
+  { name: "PostgreSQL", iconClass: "devicon-postgresql-plain colored" },
+  { name: "DynamoDB", Icon: Database },
+  { name: "Redis", iconClass: "devicon-redis-plain colored" },
+  { name: "BullMQ", Icon: ListOrdered },
+  { name: "WebSockets", Icon: Cable },
+  { name: "AWS (S3, RDS)", iconClass: "devicon-amazonwebservices-original colored" },
+  { name: "Twilio", Icon: Phone },
+  { name: "Linux", iconClass: "devicon-linux-plain colored" },
+];
+
+const skillTabs: { value: string; label: string; skills: Skill[] }[] = [
+  { value: "languages", label: "Languages", skills: languages },
+  { value: "frameworks", label: "Frameworks", skills: frameworks },
+  { value: "llm", label: "LLM & AI", skills: llmAi },
+  { value: "tools", label: "Tools", skills: tools },
+];
+// --- End Skill Data ---
 
 // Gradient app-icon styles for minimized windows in the dock (picked per project id)
 const dockStyles = [
@@ -780,14 +824,26 @@ export default function Portfolio() {
                     </div>
                   </CardHeader>
                   <div className="relative aspect-video overflow-hidden bg-muted">
-                    <Image
-                      // Replace with actual project images or use a placeholder service properly
-                      src ={project.image} // Using a local placeholder or update path
-                      alt={`Project ${project.id}`}
-                      width={400}
-                      height={225} // Maintain aspect ratio
-                      className="object-cover w-full h-full"
-                    />
+                    {project.video ? (
+                      <video
+                        src={project.video}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        aria-label={`${project.title} demo video`}
+                        className="object-cover w-full h-full"
+                      />
+                    ) : (
+                      <Image
+                        src={project.image}
+                        alt={`Project ${project.id}`}
+                        width={400}
+                        height={225}
+                        className="object-cover w-full h-full"
+                      />
+                    )}
                   </div>
                   <CardContent className="p-4 flex-grow">
                     <CardTitle>{project.title}</CardTitle>
@@ -895,60 +951,28 @@ export default function Portfolio() {
               </div>
               <div className="p-6">
                 <Tabs defaultValue="languages" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4"> {/* Adjusted grid cols */}
-                    <TabsTrigger value="languages">Languages</TabsTrigger>
-                    <TabsTrigger value="frontend">Frontend</TabsTrigger>
-                    <TabsTrigger value="backend">Backend</TabsTrigger>
-                    <TabsTrigger value="tools">Tools</TabsTrigger>
+                  <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
+                    {skillTabs.map((tab) => (
+                      <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>
+                    ))}
                   </TabsList>
 
-                  {/* Languages Tab */}
-                  <TabsContent value="languages" className="mt-6"> {/* Increased margin top */}
-                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-4"> {/* Adjusted gap */}
-                      {languages.map((skill) => (
-                        <div key={skill.name} className="flex flex-col items-center gap-2 w-20 text-center" title={skill.name}>
-                          <i className={`${skill.iconClass} text-4xl transition-transform duration-200 hover:scale-110`}></i>
-                          <span className="text-xs text-muted-foreground">{skill.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
-
-                  {/* Frontend Tab */}
-                  <TabsContent value="frontend" className="mt-6">
-                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-4">
-                      {frontend.map((skill) => (
-                         <div key={skill.name} className="flex flex-col items-center gap-2 w-20 text-center" title={skill.name}>
-                          <i className={`${skill.iconClass} text-4xl transition-transform duration-200 hover:scale-110`}></i>
-                          <span className="text-xs text-muted-foreground">{skill.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
-
-                  {/* Backend Tab */}
-                  <TabsContent value="backend" className="mt-6">
-                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-4">
-                      {backend.map((skill) => (
-                         <div key={skill.name} className="flex flex-col items-center gap-2 w-20 text-center" title={skill.name}>
-                          <i className={`${skill.iconClass} text-4xl transition-transform duration-200 hover:scale-110`}></i>
-                          <span className="text-xs text-muted-foreground">{skill.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
-
-                  {/* Tools Tab */}
-                  <TabsContent value="tools" className="mt-6">
-                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-4">
-                      {tools.map((skill) => (
-                         <div key={skill.name} className="flex flex-col items-center gap-2 w-20 text-center" title={skill.name}>
-                          <i className={`${skill.iconClass} text-4xl transition-transform duration-200 hover:scale-110`}></i>
-                          <span className="text-xs text-muted-foreground">{skill.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
+                  {skillTabs.map((tab) => (
+                    <TabsContent key={tab.value} value={tab.value} className="mt-6">
+                      <div className="flex flex-wrap justify-center gap-x-6 gap-y-4">
+                        {tab.skills.map((skill) => (
+                          <div key={skill.name} className="flex flex-col items-center gap-2 w-24 text-center" title={skill.name}>
+                            {skill.Icon ? (
+                              <skill.Icon className="h-9 w-9 text-primary transition-transform duration-200 hover:scale-110" strokeWidth={1.5} />
+                            ) : (
+                              <i className={`${skill.iconClass} text-4xl transition-transform duration-200 hover:scale-110`}></i>
+                            )}
+                            <span className="text-xs text-muted-foreground">{skill.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </TabsContent>
+                  ))}
                 </Tabs>
               </div>
             </div>
