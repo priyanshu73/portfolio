@@ -270,12 +270,59 @@ const dockStyles = [
   { Icon: Flame, bg: "from-yellow-400 to-red-500" },
 ]
 
+const experienceEntries = [
+  {
+    title: "AI Engineering Intern",
+    company: "HomeServe USA",
+    location: "Norwalk, CT",
+    period: "Jun 2026 – Present",
+    bullets: [
+      "Shipped an AI voice role-play training platform (FastAPI, React + TypeScript, DynamoDB) on Amazon Nova Sonic via AWS Bedrock, serving ~1,000 employees across 10 departments at 50+ sessions daily.",
+      "Designed and deployed a custom Amazon Q agent extracting 5,000+ pages of daily Chase payment data via S3, eliminating ~5 hours of manual work per day.",
+      "Engineered the real-time audio loop over WebSockets into Bedrock's bidirectional stream: barge-in, context-preserving reconnects, and JSON Schema-validated in-stream tool calling.",
+      "Built a hybrid-retrieval creative-review pipeline (embeddings + BM25, cross-encoder reranking) for brand and legal checks, validated on Recall@5 and LLM-as-judge scoring.",
+    ],
+  },
+  {
+    title: "Software Engineering Intern",
+    company: "Eazifunds",
+    location: "San Francisco, CA",
+    period: "Jun 2025 – Aug 2025",
+    bullets: [
+      "Developed Django microservices on PostgreSQL and AWS RDS for payout and eligibility workflows, using asynchronous views and Redis caching to hold concurrent operations at low latency.",
+      "Integrated Stripe, Plaid, and QuickBooks APIs for payment processing and real-time account verification, and refined transaction scoring models for compliance and payout accuracy.",
+    ],
+  },
+]
+
+const educationEntry = {
+  school: "Gettysburg College",
+  location: "Gettysburg, PA",
+  degree: "B.S. in Computer Science and Mathematics",
+  gpa: "GPA 3.67",
+  period: "May 2027",
+  coursework: [
+    "Artificial Intelligence",
+    "Advanced System Design",
+    "Data Structures",
+    "Algorithms",
+    "Database Systems",
+    "Linear Algebra",
+    "Probability & Statistics",
+    "Real Analysis",
+    "Number Theory",
+    "Abstract Algebra",
+  ],
+}
+
 type WinId = number | string
 
 // Section windows (non-project cards) that share the trash/dock behavior
 const sectionWindows: Record<string, { label: string }> = {
   hero: { label: "Terminal — whoami" },
   skills: { label: "Terminal — skills.json" },
+  experience: { label: "Terminal — experience.log" },
+  education: { label: "Terminal — education.log" },
   contact: { label: "Terminal — contact.form" },
 }
 
@@ -438,8 +485,7 @@ export default function Portfolio() {
   };
   useEffect(() => {
     const handleScroll = () => {
-      // Adjusted sections list to remove 'experience'
-      const sections = ["hero", "projects", "skills", /* "experience", */ "contact"]
+      const sections = ["hero", "projects", "skills", "experience", "education", "contact"]
 
       for (const section of sections) {
         const element = document.getElementById(section)
@@ -475,18 +521,18 @@ export default function Portfolio() {
       <div className="sticky top-0 z-50 pt-4 pb-2 bg-background/80 backdrop-blur-md">
         <div className="container mx-auto">
           <div className="flex justify-center">
-            <div className="bg-card/80 backdrop-blur-md border rounded-full px-4 py-2 shadow-lg flex items-center space-x-4 max-w-3xl">
+            <div className="bg-card/80 backdrop-blur-md border rounded-full px-2 sm:px-4 py-1.5 sm:py-2 shadow-lg flex items-center space-x-0.5 sm:space-x-4 max-w-full">
               {/* About Button */}
               <button
                 onClick={() => scrollToSection("hero")}
-                className={`p-2 rounded-full transition-all duration-200 dock-icon ${
+                className={`p-1 sm:p-2 rounded-full transition-all duration-200 dock-icon ${
                   activeSection === "hero" ? "bg-primary/20 text-primary scale-110" : "hover:bg-muted"
                 }`}
                 aria-label="About Me"
               >
                 <div className="flex flex-col items-center">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                       <path
                         fillRule="evenodd"
                         d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
@@ -494,20 +540,20 @@ export default function Portfolio() {
                       />
                     </svg>
                   </div>
-                  <span className="text-xs mt-1">About</span>
+                  <span className="hidden sm:block text-xs mt-1">About</span>
                 </div>
               </button>
               {/* Projects Button */}
               <button
                 onClick={() => scrollToSection("projects")}
-                className={`p-2 rounded-full transition-all duration-200 dock-icon ${
+                className={`p-1 sm:p-2 rounded-full transition-all duration-200 dock-icon ${
                   activeSection === "projects" ? "bg-primary/20 text-primary scale-110" : "hover:bg-muted"
                 }`}
                 aria-label="Projects"
               >
                 <div className="flex flex-col items-center">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                       <path
                         fillRule="evenodd"
                         d="M14.447 3.027a.75.75 0 01.527.92l-4.5 16.5a.75.75 0 01-1.448-.394l4.5-16.5a.75.75 0 01.921-.526zM16.72 6.22a.75.75 0 011.06 0l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 11-1.06-1.06L21.44 12l-4.72-4.72a.75.75 0 010-1.06zm-9.44 0a.75.75 0 010 1.06L2.56 12l4.72 4.72a.75.75 0 11-1.06 1.06L.97 12.53a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0z"
@@ -515,41 +561,40 @@ export default function Portfolio() {
                       />
                     </svg>
                   </div>
-                  <span className="text-xs mt-1">Projects</span>
+                  <span className="hidden sm:block text-xs mt-1">Projects</span>
                 </div>
               </button>
               {/* Skills Button */}
               <button
                 onClick={() => scrollToSection("skills")}
-                className={`p-2 rounded-full transition-all duration-200 dock-icon ${
+                className={`p-1 sm:p-2 rounded-full transition-all duration-200 dock-icon ${
                   activeSection === "skills" ? "bg-primary/20 text-primary scale-110" : "hover:bg-muted"
                 }`}
                 aria-label="Skills"
               >
                 <div className="flex flex-col items-center">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                       <path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0A50.009 50.009 0 007.5 12.174v-.224c0-.131.067-.248.172-.311a54.614 54.614 0 014.653-2.52.75.75 0 00-.65-1.352 56.129 56.129 0 00-4.78 2.589 1.858 1.858 0 00-.859 1.228 49.803 49.803 0 00-4.634-1.527.75.75 0 01-.231-1.337A60.653 60.653 0 0111.7 2.805z" />
                       <path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016 13.18v1.27a1.5 1.5 0 00-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.661a6.729 6.729 0 00.551-1.608 1.5 1.5 0 00.14-2.67v-.645a48.549 48.549 0 013.44 1.668 2.25 2.25 0 002.12 0z" />
                       <path d="M4.462 19.462c.42-.419.753-.89 1-1.394.453.213.902.434 1.347.661a6.743 6.743 0 01-1.286 1.794.75.75 0 11-1.06-1.06z" />
                     </svg>
                   </div>
-                  <span className="text-xs mt-1">Skills</span>
+                  <span className="hidden sm:block text-xs mt-1">Skills</span>
                 </div>
               </button>
 
-              {/* --- Experience Button Commented Out --- */}
-              {/*
+              {/* Experience Button */}
               <button
                 onClick={() => scrollToSection("experience")}
-                className={`p-2 rounded-full transition-all duration-200 dock-icon ${
+                className={`p-1 sm:p-2 rounded-full transition-all duration-200 dock-icon ${
                   activeSection === "experience" ? "bg-primary/20 text-primary scale-110" : "hover:bg-muted"
                 }`}
                 aria-label="Experience"
               >
                 <div className="flex flex-col items-center">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                       <path
                         fillRule="evenodd"
                         d="M7.5 5.25a3 3 0 013-3h3a3 3 0 013 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0112 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 017.5 5.455V5.25zm7.5 0v.09a49.488 49.488 0 00-6 0v-.09a1.5 1.5 0 011.5-1.5h3a1.5 1.5 0 011.5 1.5zm-3 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
@@ -558,32 +603,48 @@ export default function Portfolio() {
                       <path d="M3 18.4v-2.796a4.3 4.3 0 00.713.31A26.226 26.226 0 0012 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 01-6.477-.427C4.047 21.128 3 19.852 3 18.4z" />
                     </svg>
                   </div>
-                  <span className="text-xs mt-1">Experience</span>
+                  <span className="hidden sm:block text-xs mt-1">Experience</span>
                 </div>
               </button>
-              */}
-              {/* --- End Experience Button Commented Out --- */}
+
+              {/* Education Button */}
+              <button
+                onClick={() => scrollToSection("education")}
+                className={`p-1 sm:p-2 rounded-full transition-all duration-200 dock-icon ${
+                  activeSection === "education" ? "bg-primary/20 text-primary scale-110" : "hover:bg-muted"
+                }`}
+                aria-label="Education"
+              >
+                <div className="flex flex-col items-center">
+                  <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-sky-500 to-indigo-500 flex items-center justify-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+                      <path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z" />
+                    </svg>
+                  </div>
+                  <span className="hidden sm:block text-xs mt-1">Education</span>
+                </div>
+              </button>
 
               {/* Contact Button */}
               <button
                 onClick={() => scrollToSection("contact")}
-                className={`p-2 rounded-full transition-all duration-200 dock-icon ${
+                className={`p-1 sm:p-2 rounded-full transition-all duration-200 dock-icon ${
                   activeSection === "contact" ? "bg-primary/20 text-primary scale-110" : "hover:bg-muted"
                 }`}
                 aria-label="Contact"
               >
                 <div className="flex flex-col items-center">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
                       <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
                       <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
                     </svg>
                   </div>
-                  <span className="text-xs mt-1">Contact</span>
+                  <span className="hidden sm:block text-xs mt-1">Contact</span>
                 </div>
               </button>
               {/* Theme Toggle */}
-              <div className="ml-2">
+              <div className="ml-1 sm:ml-2">
                 <ThemeToggle />
               </div>
             </div>
@@ -980,67 +1041,108 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* --- Experience Section Commented Out --- */}
-        {/*
+        {/* Experience Section */}
         <section id="experience" className="py-10">
           <div className="space-y-6">
             <div className="inline-block text-foreground/60">
               <span className="text-primary">$</span> cat ./experience.log
             </div>
-            <div className="rounded-lg border bg-card shadow-lg overflow-hidden">
+            {!isGone("experience") && (
+            <div
+              key={`experience-${zoomKeys["experience"] ?? 0}`}
+              className={`rounded-lg border bg-card shadow-lg overflow-hidden ${
+                winAnimCls("experience") || (zoomKeys["experience"] ? "animate-terminal-warp" : "")
+              }`}
+            >
+              {/* Mac window controls */}
               <div className="flex items-center p-3 border-b bg-muted/30">
-                <div className="flex space-x-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                  <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                </div>
+                <TrafficLights
+                  onClose={() => closeProject("experience")}
+                  onMinimize={() => minimizeProject("experience")}
+                  onGreen={() => zoomWindow("experience")}
+                />
                 <div className="ml-4 text-sm font-medium">Terminal — experience.log</div>
               </div>
               <div className="p-6 space-y-6">
-                {[
-                  {
-                    title: "Software Engineer Intern",
-                    company: "Tech Company",
-                    period: "Jun 2023 - Aug 2023",
-                    description:
-                      "Developed and maintained web applications using React and Node.js. Collaborated with the team to implement new features and fix bugs.",
-                  },
-                  {
-                    title: "Research Assistant",
-                    company: "University Lab",
-                    period: "Jan 2023 - May 2023",
-                    description:
-                      "Assisted in research on machine learning algorithms. Implemented and tested models for data analysis.",
-                  },
-                  {
-                    title: "Web Developer",
-                    company: "Student Organization",
-                    period: "Sep 2022 - Dec 2022",
-                    description:
-                      "Designed and developed the organization's website. Maintained and updated content regularly.",
-                  },
-                ].map((exp, index) => (
-                  <Card key={index} className="border bg-card">
+                {experienceEntries.map((exp) => (
+                  <Card key={exp.company} className="border bg-card">
                     <CardHeader className="p-4">
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap items-start justify-between gap-2">
                         <div>
                           <CardTitle>{exp.title}</CardTitle>
-                          <CardDescription>{exp.company}</CardDescription>
+                          <CardDescription>
+                            {exp.company} · {exp.location}
+                          </CardDescription>
                         </div>
                         <Badge variant="outline">{exp.period}</Badge>
                       </div>
                     </CardHeader>
                     <CardContent className="p-4 pt-0">
-                      <p>{exp.description}</p>
+                      <ul className="list-disc pl-5 space-y-1.5 text-sm text-muted-foreground">
+                        {exp.bullets.map((bullet, i) => (
+                          <li key={i}>{bullet}</li>
+                        ))}
+                      </ul>
                     </CardContent>
                   </Card>
                 ))}
               </div>
             </div>
+            )}
           </div>
         </section>
-        */}
-        {/* --- End Experience Section Commented Out --- */}
+
+        {/* Education Section */}
+        <section id="education" className="py-10">
+          <div className="space-y-6">
+            <div className="inline-block text-foreground/60">
+              <span className="text-primary">$</span> cat ./education.log
+            </div>
+            {!isGone("education") && (
+            <div
+              key={`education-${zoomKeys["education"] ?? 0}`}
+              className={`rounded-lg border bg-card shadow-lg overflow-hidden ${
+                winAnimCls("education") || (zoomKeys["education"] ? "animate-terminal-warp" : "")
+              }`}
+            >
+              {/* Mac window controls */}
+              <div className="flex items-center p-3 border-b bg-muted/30">
+                <TrafficLights
+                  onClose={() => closeProject("education")}
+                  onMinimize={() => minimizeProject("education")}
+                  onGreen={() => zoomWindow("education")}
+                />
+                <div className="ml-4 text-sm font-medium">Terminal — education.log</div>
+              </div>
+              <div className="p-6">
+                <Card className="border bg-card">
+                  <CardHeader className="p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div>
+                        <CardTitle>{educationEntry.school}</CardTitle>
+                        <CardDescription>
+                          {educationEntry.degree} · {educationEntry.gpa} · {educationEntry.location}
+                        </CardDescription>
+                      </div>
+                      <Badge variant="outline">{educationEntry.period}</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-0">
+                    <p className="text-sm text-muted-foreground mb-3">Relevant coursework:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {educationEntry.coursework.map((course) => (
+                        <Badge key={course} variant="secondary" className="font-normal">
+                          {course}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+            )}
+          </div>
+        </section>
 
         {/* Contact Section */}
         <section id="contact" className="py-10">
