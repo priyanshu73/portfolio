@@ -788,7 +788,7 @@ export default function Portfolio() {
 
                     <div className="space-y-4">
                     <p>
-  Hey! I'm a Computer Science student who loves learning new tech and building cool stuff. Right now, I’m focused on an automated trading platform, but I’m always open to new challenges.
+  Hey! I'm a Computer Science student who loves learning new tech and building cool stuff. These days I'm deep in the AI agent world: I build voice agents and RAG pipelines at my internship, ship my own products like ChatMigrate (a Chrome extension for moving chats between AI platforms), and I'm currently learning about agent reliability, evals, and AI security, basically how to make agents you can actually trust in production. Always open to new challenges.
 </p>
 <p>
   I have a deep passion for math, particularly Calculus & Linear Algebra, and I admire how it applies to technology and the real world. I’m also passionate about cinema, with filmmaking being one of my hobbies. Some of my favorite films include <em>Se7en</em>, <em>The Truman Show</em>, <em>The Shining</em>, <em>Terminator 2</em>, <em>Fargo</em>, <em>Goodfellas</em>, and many more.
