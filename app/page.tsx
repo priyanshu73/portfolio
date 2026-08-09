@@ -59,7 +59,7 @@ type Project = {
   image: string
   video?: string
   github: string
-  demo: string
+  demo?: string
   facts?: ProjectFacts
 }
 
@@ -134,20 +134,6 @@ const projects: Project[] = [
       stats: [{ value: "1st", label: "Place · Best of Show" }],
     },
   },
-  {
-    id: 9,
-    title: "Campus Tea",
-    description: "Campus Tea is a live platform built with a Next.js frontend and Express.js backend, using Prisma + PostgreSQL. It integrates Google Workspace APIs for scheduling, Google OAuth for authentication, and Stripe (sandbox) for payments, with Node cron jobs automating meeting verification and payment dispatch." ,
-    image: "/placeholderimage9.gif",
-    github: "https://github.com/priyanshu73",
-    demo: "https://www.campustea.io",
-    facts: {
-      headline: "Entrepreneurship Award winner",
-      stats: [{ value: "$10K", label: "Award funding" }],
-    },
-  },
-  
-  
  {
     id: 3,
     title: "Silicon Peaks Venture",
@@ -163,6 +149,17 @@ const projects: Project[] = [
         "Scaling strategies for early products",
         "Feature brainstorms with founding teams",
       ],
+    },
+  },
+  {
+    id: 9,
+    title: "Campus Tea",
+    description: "Campus Tea is a platform built with a Next.js frontend and Express.js backend, using Prisma + PostgreSQL. It integrates Google Workspace APIs for scheduling, Google OAuth for authentication, and Stripe (sandbox) for payments, with Node cron jobs automating meeting verification and payment dispatch.",
+    image: "/placeholderimage9.gif",
+    github: "https://github.com/priyanshu73",
+    facts: {
+      headline: "Entrepreneurship Award winner",
+      stats: [{ value: "$10K", label: "Award funding" }],
     },
   },
   {
@@ -868,7 +865,7 @@ export default function Portfolio() {
                       <TrafficLights
                         onClose={() => closeProject(project.id)}
                         onMinimize={() => minimizeProject(project.id)}
-                        onGreen={() => openDemo(project.demo)}
+                        onGreen={() => openDemo(project.demo ?? project.github)}
                         GreenIcon={ExternalLink}
                       />
                       <CardTitle className="ml-4 text-sm">project-{project.title}.sh</CardTitle>
@@ -919,12 +916,14 @@ export default function Portfolio() {
                         GitHub
                       </Link>
                     </Button>
-                    <Button asChild variant="outline" size="sm">
-                      <Link href={project.demo} target="_blank">
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        Live
-                      </Link>
-                    </Button>
+                    {project.demo && (
+                      <Button asChild variant="outline" size="sm">
+                        <Link href={project.demo} target="_blank">
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          Live
+                        </Link>
+                      </Button>
+                    )}
                   </CardFooter>
                 </Card>
 
